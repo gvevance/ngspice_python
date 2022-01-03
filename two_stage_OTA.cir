@@ -1,0 +1,37 @@
+2 stage OTA. Final aim - use RL agent to design it
+vin 1 0 dc 0 ac 1
+gm1 2 0 1 0 -2m
+r1 2 0 500k
+c1 2 0 0.6p
+cc 2 3 12.5p
+gm2 3 0 2 0 5m
+r2 3 0 20k
+c2 3 0 0.8p
+
+* AC analysis
+.ac dec 10 1 10G
+
+* measuring phase margin
+.measure ac phase_margin 
++ FIND vp(3) WHEN vdb(3) = 0
+.measure ac phase_margin_deg param = ' 57.29*phase_margin '
+
+* measuring DC gain
+.measure ac DC_gain_dB
++ MAX vdb(3) from=1 to=10G 
+
+* measuring UGF
+.measure ac UGF
++ WHEN vdb(3)=0 CROSS=1
+
+.control
+run
+
+* Magnitude dB plot for v(3) on log scale
+plot vdb(3) xlog
+* Phase in degrees plot for v(3) on log scale
+plot {57.29*vp(3)} xlog
+
+.endc
+.end
+
