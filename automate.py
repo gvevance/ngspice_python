@@ -64,6 +64,10 @@ meas ac UGF
 *+ ylabel 'Phase in deg'
 *+ title 'Phase plot'
 
+echo "$&DC_gain_dB" >> output.txt
+echo "$&UGF" >> output.txt
+echo "$&phase_margin" >> output.txt
+
 exit ; so that ngspice does not end in interactive mode
 
 .endc
