@@ -2,13 +2,13 @@
 
 * Circuit definition
 vin 1 0 dc 0 ac 1
-gm1 2 0 1 0 -2m
-r1 2 0 500k
-c1 2 0 0.6p
-cc 2 3 12.5p
-gm2 3 0 2 0 5m
-r2 3 0 20k
-c2 3 0 0.8p
+gm1 2 0 1 0 -0.002
+r1 2 0 500000.0
+c1 2 0 6e-13
+cc 2 3 1.25e-11
+gm2 3 0 2 0 0.005
+r2 3 0 20000.0
+c2 3 0 8e-13
 
 * AC analysis
 .ac dec 10 1 10G
@@ -36,4 +36,3 @@ run
 
 .endc
 .end
-
