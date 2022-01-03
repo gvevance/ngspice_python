@@ -32,9 +32,6 @@ c2 3 0 {c2}
 ***** Analysis command *****
 ac dec 10 1e-3 10G
 
-***** Run *****
-run
-
 ***** Measuring performance metrics *****
 
 * measuring phase margin
@@ -64,9 +61,11 @@ meas ac UGF
 *+ ylabel 'Phase in deg'
 *+ title 'Phase plot'
 
-echo "$&DC_gain_dB" >> output.txt
-echo "$&UGF" >> output.txt
-echo "$&phase_margin" >> output.txt
+***** Output measured values into output.csv *****
+echo "$&DC_gain_dB , $&UGF , $&phase_margin" >> output.csv
+
+***** Run *****
+run
 
 exit ; so that ngspice does not end in interactive mode
 
