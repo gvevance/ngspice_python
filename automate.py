@@ -2,6 +2,7 @@
 # TODO: Add an interactive mode for the circuit
 
 import numpy as np
+from subprocess import call
 
 # defining parameters
 gm1 = 2e-3
@@ -26,29 +27,44 @@ gm2 3 0 2 0 {gm2}
 r2 3 0 {r2}
 c2 3 0 {c2}
 
-* AC analysis
-.ac dec 10 1 10G
-
-* measuring phase margin
-.measure ac phase_margin 
-+ FIND vp(3) WHEN vdb(3) = 0
-.measure ac phase_margin_deg param = ' 57.29*phase_margin '
-
-* measuring DC gain
-.measure ac DC_gain_dB
-+ MAX vdb(3) from=1 to=10G 
-
-* measuring UGF
-.measure ac UGF
-+ WHEN vdb(3)=0 CROSS=1
-
 .control
+
+***** Analysis command *****
+ac dec 10 1e-3 10G
+
+***** Run *****
 run
 
+***** Measuring performance metrics *****
+
+* measuring phase margin
+let vp_deg = vp(3)*57.29
+meas ac phase_margin 
++ FIND vp_deg WHEN vdb(3) = 0
+
+* measuring DC gain
+meas ac DC_gain_dB
++ MAX vdb(3) from=1e-3 to=10G 
+
+* measuring UGF
+meas ac UGF
++ WHEN vdb(3)=0 CROSS=1
+
+***** Bode plots of vout *****
+
 * Magnitude dB plot for v(3) on log scale
-* plot vdb(3) xlog
+*plot vdb(3) xlog
+*+ xlabel 'Frequency in Hz'
+*+ ylabel 'Magnitude in dB'
+*+ title 'Magnitude plot'
+
 * Phase in degrees plot for v(3) on log scale
-* plot {{57.29*vp(3)}} xlog
+*plot {{57.29*vp(3)}} xlog
+*+ xlabel 'Frequency in Hz'
+*+ ylabel 'Phase in deg'
+*+ title 'Phase plot'
+
+exit ; so that ngspice does not end in interactive mode
 
 .endc
 .end
@@ -57,3 +73,5 @@ run
 # print(string1)
 with open(filename,"w") as file:
     file.write(contents)
+
+call(["ngspice", "dummy.cir"])
