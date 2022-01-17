@@ -27,12 +27,19 @@ gm2 3 0 2 0 {gm2}
 r2 3 0 {r2}
 c2 3 0 {c2}
 
+*****************************************
+* Control block
+*****************************************
 .control
 
-***** Analysis command *****
+*****************************************
+* Analysis command
+*****************************************
 ac dec 10 1e-3 10G
 
-***** Measuring performance metrics *****
+*****************************************
+* Measuring performance metrics 
+*****************************************
 
 * measuring phase margin
 let vp_deg = vp(3)*57.29
@@ -47,7 +54,9 @@ meas ac DC_gain_dB
 meas ac UGF
 + WHEN vdb(3)=0 CROSS=1
 
-***** Bode plots of vout *****
+*****************************************
+* Bode plots of vout 
+*****************************************
 
 * Magnitude dB plot for v(3) on log scale
 *plot vdb(3) xlog
@@ -61,10 +70,14 @@ meas ac UGF
 *+ ylabel 'Phase in deg'
 *+ title 'Phase plot'
 
-***** Output measured values into output.csv *****
-echo "$&DC_gain_dB , $&UGF , $&phase_margin" >> output.csv
+*****************************************
+* Output measured values into output.csv 
+*****************************************
+echo "$&DC_gain_dB $&UGF $&phase_margin" >> output.csv
 
-***** Run *****
+*****************************************
+* Run
+*****************************************
 run
 
 exit ; so that ngspice does not end in interactive mode
